@@ -1,5 +1,6 @@
 import EventCard from "@/components/EventCard"
 import ExlporeBtn from "@/components/ExlporeBtn"
+import FeaturedEventsTracker from "@/components/FeaturedEventsTracker"
 
 const events = [
   {image:'/images/event1.png',title:'Hackathon',slug:'event-1',location:'New York',date:'2023-05-01',time:'10:00 AM'},
@@ -17,6 +18,7 @@ const page = () => {
 <ExlporeBtn/>
 
 <div className="mt-20 space-y-7">
+<FeaturedEventsTracker eventCount={events.length} />
 <h3>Featured Events</h3>
 
 <ul className="events list-none p-0 m-0">
