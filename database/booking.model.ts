@@ -1,5 +1,6 @@
 import { Schema, model, models, Document, Types } from 'mongoose';
 import Event from './event.model';
+import connectMongoDB from '@/lib/mongodb';
 
 // TypeScript interface for Booking document
 export interface IBooking extends Document {
@@ -40,6 +41,7 @@ const BookingSchema = new Schema<IBooking>(
 BookingSchema.pre('save', async function (next) {
   const booking = this as IBooking;
 
+  await connectMongoDB()
   // Only validate eventId if it's new or modified
   if (booking.isModified('eventId') || booking.isNew) {
     try {

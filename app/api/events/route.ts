@@ -1,4 +1,4 @@
-import connectDB from "@/lib/mongodb";
+import connectMongoDB from "@/lib/mongodb";
 import Event from "@/database/event.model";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -6,7 +6,7 @@ import { v2 as cloudinary, UploadApiResponse } from "cloudinary";
 
 export async function POST(request: NextRequest) {
   try {
-    await connectDB();
+    await connectMongoDB();
 
     const formData = await request.formData();
 
@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
   try {
-    await connectDB();  
+    await connectMongoDB();  
 
     let events = await Event.find().sort({ createdAt: -1 });
 
