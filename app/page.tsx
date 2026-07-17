@@ -1,6 +1,7 @@
 import EventCard from "@/components/EventCard"
 import ExlporeBtn from "@/components/ExlporeBtn"
 import FeaturedEventsTracker from "@/components/FeaturedEventsTracker"
+import { cacheLife } from "next/cache";
 
 // const events = [
 //   {image:'/images/event1.png',title:'Hackathon',slug:'event-1',location:'New York',date:'2023-05-01',time:'10:00 AM'},
@@ -11,6 +12,8 @@ import FeaturedEventsTracker from "@/components/FeaturedEventsTracker"
 
 const page = async () => {
  
+  'use cache';
+  cacheLife('hours')
   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/events`, {
     method: "GET",
     headers: {

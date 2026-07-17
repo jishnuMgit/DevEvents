@@ -1,4 +1,7 @@
+import BookEvent from "@/components/BookEvent";
+import SimilarEvents from "@/components/SimilarEvents";
 import Image from "next/image";
+import { Suspense } from "react";
 
 
 const EventDetail = ({ icon, alt, label }: { icon: string; alt: string; label: string }) => {
@@ -42,18 +45,23 @@ const EventTags = ({ tags }: { tags: String[]}) => {
     </div>
   );
 }
+const Booking=10;
+
+
 const EventPagedetail =async ({params}:{params:Promise<{slug: string}>}) => {
+ 
   const { slug } = await params;
   const request = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/events/${slug}`, {
+    cache:"no-store",
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
   });
 
-  if(!request){
-    throw new Error("Failed to fetch event data");
-  }
+  if (!request.ok) {
+  throw new Error("Failed to fetch event data");
+}
   const {event:{description,image,overview,date,time,location,mode,agenda,audience,tags,organizer}} = await request.json();
 
   return (
@@ -91,11 +99,34 @@ const EventPagedetail =async ({params}:{params:Promise<{slug: string}>}) => {
 
 <aside className="booking">
 
-<p className="text-lg font-bold">Book Event</p>
+<div className="signup-card">
+  <h2>Book Your Spot</h2>
+  {Booking>0?(<p className="text-lg font-bold">join {Booking} people who have already booked their spots!</p>):(<p className="text-sm">Be the first to book your spot!</p>)}
+
+<BookEvent/>
+</div>
 </aside>
 
 
 </div>
+
+
+<div className="flex w-full flex-col gap-2 mt-4 pt-20">
+
+  <h2>Similar Events</h2>
+  <Suspense fallback={<p>Loading similar events...</p>}>
+
+<div >
+
+  <SimilarEvents slug={slug} />
+  </div>
+</Suspense>
+
+
+
+</div>
+
+
 </section>
 )
 }

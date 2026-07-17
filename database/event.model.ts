@@ -135,7 +135,6 @@ function normalizeTime(time: string) {
   return time;
 }
 
-EventSchema.index({ slug: 1 }, { unique: true });
 
 const Event = models.Event || model<IEvent>("Event", EventSchema);
 
